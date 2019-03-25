@@ -1,42 +1,42 @@
 from . import Databricks
+import requests
 
-class SCIM:
+class SCIM(Databricks.Databricks):
 	def __init__(self, url):
 		super().__init__()
 		self._url = url
 		self._api_type = 'preview/scim/v2'
-		self._write_headers = {'content-type': 'application/scim+json', 'authorization': self._token}
-		self._accept = {'content-type': 'application/scim+json'}
+		self._write_headers = {'content-type': 'application/scim+json', 'authorization': self._token, 'Accept': 'application/scim+json'}
 
 	def _scim_post(self, url, payload=None):
 		if payload is None:
-			return requests.post(url, headers=self._write_headers, accept=self._accept)
+			return requests.post(url, headers=self._write_headers)
 		else:
-			return requests.post(url, payload=json.dumps(payload), headers=self._write_headers, accept=self._accept)
+			return requests.post(url, json=payload, headers=self._write_headers)
 
 	def _scim_get(self, url, payload=None):
 		if payload is None:
-			return requests.get(url, headers=self._write_headers, accept=self._accept)
+			return requests.get(url, headers=self._write_headers)
 		else:
-			return requests.get(url, payload=json.dumps(payload), headers=self._write_headers, accept=self._accept)
+			return requests.get(url, json=payload, headers=self._write_headers)
 
 	def _scim_patch(self, url, payload):
 		if payload is None:
-			return requests.patch(url, headers=self._write_headers, accept=self._accept)
+			return requests.patch(url, headers=self._write_headers)
 		else:
-			return requests.patch(url, payload=json.dumps(payload), headers=self._write_headers, accept=self._accept)
+			return requests.patch(url, json=payload, headers=self._write_headers)
 
 	def _scim_put(self, url, payload):
 		if payload is None:
-			return requests.put(url, headers=self._write_headers, accept=self._accept)
+			return requests.put(url, headers=self._write_headers)
 		else:
-			return requests.put(url, payload=json.dumps(payload), headers=self._write_headers, accept=self._accept)
+			return requests.put(url, json=payload, headers=self._write_headers)
 
 	def _scim_delete(self, url, payload):
 		if payload is None:
-			return requests.delete(url, headers=self._write_headers, accept=self._accept)
+			return requests.delete(url, headers=self._write_headers)
 		else:
-			return requests.delete(url, payload=json.dumps(payload), headers=self._write_headers, accept=self._accept)
+			return requests.delete(url, json=payload, headers=self._write_headers)
 
 
 	def getUsers(self, filter_string=None):
